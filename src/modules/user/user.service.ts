@@ -6,12 +6,16 @@ export class UserService {
     return [
       {
         id: 0,
-        name: '张三'
+        name: '张三',
+        age: 18,
+        tel: '17600382086',
       },
       {
         id: 1,
-        name: '李四'
-      }
-    ]
+        name: '李四',
+        age: 18,
+        tel: '17600382086',
+      },
+    ];
   }
 }
