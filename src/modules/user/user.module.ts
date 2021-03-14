@@ -4,8 +4,8 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
 @Module({
-  imports:[LogModule.forRoot('user')],
+  imports: [LogModule.forRoot('user')],
   controllers: [UserController],
-  // providers: [UserService]
+  providers: [UserService],
 })
 export class UserModule {}
