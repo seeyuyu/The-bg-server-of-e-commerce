@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-// import { fs } from 'fs';
-// function readFile = function(){
-//   fs.readFile(__dirname +'/user.txt')
-// }
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from './schemas/user.schema';
+import { CreateUserDTO } from './dto/create_user.dto';
 @Injectable()
 export class UserService {
   private data = [
@@ -22,6 +22,7 @@ export class UserService {
     },
   ];
   private idLength = 2;
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async postUser(params): Promise<any> {
     const { age, name, tel } = params;
@@ -38,6 +39,15 @@ export class UserService {
       });
       return { code: 200 };
     }
+  }
+
+  async addOne(body: CreateUserDTO): Promise<void> {
+    await this.userModel.create(body);
+  }
+
+  async findAll(): Promise<User[]> {
+    const users = await this.userModel.find({ used: true });
+    return users;
   }
 
   async deleteUser(id): Promise<any> {
