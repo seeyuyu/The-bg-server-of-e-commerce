@@ -7,10 +7,18 @@ import {
   Post,
   Put,
   Query,
+  UsePipes,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { LogService } from '../log/log.service';
-
+import {
+  CreateUserDTO,
+  DeleteUserDTO,
+  PutUserDTO,
+  getUsersDTO,
+  findOneUserDTO,
+} from './dto/create_user.dto';
+import { ValidationPipe } from '../../pipe/validation.pipe';
 @Controller('user')
 export class UserController {
   constructor(
@@ -18,19 +26,17 @@ export class UserController {
     private readonly logService: LogService,
   ) {}
 
+  @UsePipes(new ValidationPipe())
   @Post()
-  async createUser(
-    @Body('age') age: number,
-    @Body('name') name: string,
-    @Body('tel') tel: string,
-  ): Promise<any> {
-    console.log('params is', age, name, tel);
+  async createUser(@Body() body: CreateUserDTO): Promise<any> {
+    // console.log('params is', age, name, tel);
     // console.log('this.userService.userList is', this.userService.userList);
-    const data = await this.userService.postUser({ age, name, tel });
-    // return '';
+    // const data = await this.userService.postUser({ age, name, tel });
+    await this.userService.addOne(body);
+    return '';
     // console.log('data is', data);
     // this.userService.userList.push(params)
-    return data;
+    // return data;
   }
 
   @Delete(':id')
@@ -59,11 +65,11 @@ export class UserController {
     @Query('pageSize') pageSize: number,
     @Query('pageNumber') pageNumber: number,
   ): Promise<any> {
-    const data = await this.userService.getUserList({ pageSize, pageNumber });
-    console.log('pageSize, pageNumber is', pageSize, pageNumber);
-    this.logService.log('the controller of hello');
+    const data = await this.userService.findAll();
+    // const data = await this.userService.getUserList({ pageSize, pageNumber });
+    // console.log('pageSize, pageNumber is', pageSize, pageNumber);
+    // this.logService.log('the controller of getUsers');
     return data;
-    return '';
   }
 
   // @Get()
