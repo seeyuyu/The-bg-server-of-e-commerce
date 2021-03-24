@@ -27,7 +27,10 @@
     "@nestjs/platform-express": "^7.5.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+<<<<<<< HEAD
     "cookie-parser": "^1.4.5",
+=======
+>>>>>>> 148a5302bace6ae117e34629d38fb5c6196cd347
     "log4js": "^6.3.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.0",

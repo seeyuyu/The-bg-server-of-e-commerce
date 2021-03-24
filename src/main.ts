@@ -14,7 +14,9 @@ async function bootstrap() {
   // 监听所有的请求路由，并打印日志
   app.use(logger);
 
+
   app.use(cookieParser());
+
   // 使用全局拦截器打印response
   app.useGlobalInterceptors(new TransformInterceptor());
   // 使用全局过滤器捕获其他 exception
