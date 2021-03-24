@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  MinLength,
+  MaxLength,
+} from 'class-validator';
 export class CreateUserDTO {
   @IsString({ message: '真实姓名必须是 String 类型' })
   @IsNotEmpty({ message: '用户名不能为空' })
@@ -7,6 +13,8 @@ export class CreateUserDTO {
   @IsString()
   readonly age?: string;
 
+  @MinLength(6, { message: '密码长度不能小于6位数' })
+  @MaxLength(20, { message: '密码长度大于20位数' })
   @IsNotEmpty({ message: '密码不能为空' })
   readonly password: string;
 

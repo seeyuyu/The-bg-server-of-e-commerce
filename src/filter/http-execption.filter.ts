@@ -21,6 +21,7 @@ export class HttpExecptionFilter implements ExceptionFilter {
     Method: ${request.method}
     IP: ${request.ip}
     Status code: ${status}
+    Timestamp: ${new Date().toISOString()}
     Response: ${exception.toString()} \n  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     `;
     Logger.info(logFormat);
@@ -31,3 +32,15 @@ export class HttpExecptionFilter implements ExceptionFilter {
     });
   }
 }
+function doSomeThing(name) {
+  console.log(`hello`, name);
+}
+function loggingDecorator(wrapped) {
+  return function () {
+    console.log('starting');
+    const result = wrapped.apply(this, arguments);
+    console.log('ending');
+    return result;
+  };
+}
+const wrapped = loggingDecorator(doSomeThing);
