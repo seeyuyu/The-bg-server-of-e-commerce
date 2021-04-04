@@ -13,6 +13,7 @@ import {
   Request,
   UploadedFiles,
   UploadedFile,
+  Render,
   UseInterceptors,
 } from '@nestjs/common';
 import * as fs from 'fs';
@@ -26,14 +27,24 @@ import {
   getUsersDTO,
   findOneUserDTO,
 } from './dto/create_user.dto';
-import { FileInterceptor, FileFieldsInterceptor } from '@nestjs/platform-express/multer'
+import {
+  FileInterceptor,
+  FileFieldsInterceptor,
+} from '@nestjs/platform-express/multer';
 import { ValidationPipe } from '../../pipe/validation.pipe';
 @Controller({ path: 'user' })
 export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly logService: LogService,
-  ) { }
+  ) {}
+
+  @Get()
+  @Render('index')
+  testEjs(@Request() req): any {
+    // console.log(req.cookies.name, '当前的cookie');
+    return { name: '哈哈' };
+  }
 
   @UsePipes(new ValidationPipe())
   @Post()
@@ -153,7 +164,6 @@ export class UserController {
     // 这里的 file 已经是保存后的文件信息了，在此处做数据库处理，或者直接返回保存后的文件信息
     return file;
   }
-
 
   // @Get()
   // async userList(): Promise<any[]> {
